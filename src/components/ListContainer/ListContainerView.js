@@ -54,7 +54,7 @@ function ListContainerView() {
             </div>
             <div className="list-container">
                 {
-                    categories.length ? <CategoryListView categories={categories} onRemoveCategory={onRemoveCategory} /> : <div>Empty list!</div>
+                    categories.length ? <CategoryListView categories={categories} onRemoveCategory={onRemoveCategory} /> : <div style={{fontSize: "30px", textAlign: "center", padding: "40px"}}>Category list is empty!</div>
                 }
             </div>
         </div>

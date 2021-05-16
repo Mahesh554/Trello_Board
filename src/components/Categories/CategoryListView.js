@@ -8,7 +8,11 @@ function CategoryListView(props) {
             {
                 props.categories.map((category) => <CategoryItemView key={category.id} 
                 category={category}
+                sublist={category.listItems}
                 onRemoveCategory={props.onRemoveCategory}
+                onAddNewSubItem={props.onAddNewSubItem}
+                onRemoveListItem={props.onRemoveListItem}
+                onDropFromCategory={props.onDropFromCategory}
                 />)
             }
         </div>

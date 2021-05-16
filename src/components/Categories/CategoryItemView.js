@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import SubListItemFormView from '../SubList/SubListItemFormView';
 import SubListView from '../SubList/SubListView';
 
 function CategoryItemView(props) {
 
-    const [listItems, addListItems] = useState([]);
     const [Modal, setModal] = useState(false);
 
     const removeClicked = () => {
@@ -15,40 +14,25 @@ function CategoryItemView(props) {
         setModal(false);
     }
 
-    const addToLocalStorage = (modifiedList) => {
-        modifiedList.category = props.category.id
-        localStorage.setItem(props.category.id, JSON.stringify(modifiedList));
-    }
-
     const onAddNewSubItem = (sItem) => {
         let Item = {
             id: sItem.name,
             name: sItem.name,
             description: sItem.description,
-            categoryid: props.category.id
+            categoryId: props.category.id
         }
 
-        let modifiedList = [Item, ...listItems]
+        props.onAddNewSubItem(Item);
 
-        addListItems(modifiedList)
-        addToLocalStorage(modifiedList);
         setModal(false);
     }
 
-    useEffect(() => {
-        const storedItems = localStorage.getItem(props.category.id);
-        if (storedItems) {
-            addListItems(JSON.parse(storedItems));
-        }
-    }, [])
-
     const onRemoveListItem = (item) => {
-        let modifiedList = listItems.filter((listItem) => {
+        let modifiedList = props.sublist.filter((listItem) => {
             return listItem.id !== item.id
         });
 
-        addListItems(modifiedList);
-        addToLocalStorage(modifiedList);
+        props.onRemoveListItem(modifiedList, props.category.id);
     }
 
     const allowDrop = (e) => {
@@ -58,15 +42,9 @@ function CategoryItemView(props) {
     const drop = (e) => {
         e.preventDefault();
         let transferredObj = JSON.parse(e.dataTransfer.getData("data"));
-        if (props.category.id !== transferredObj.categoryId) {
-            onAddNewSubItem(transferredObj);
-
-            let itemtoRemoveCategory = JSON.parse(localStorage.getItem(transferredObj.categoryId));
-            let modifiedList = itemtoRemoveCategory.filter((listItem) => {
-                return listItem.id !== transferredObj.id
-            });
-            localStorage.setItem(transferredObj.categoryId, JSON.stringify(modifiedList));
-            window.location.reload();
+        if (props.category.id !== transferredObj.categoryId) {       
+            props.onDropFromCategory(transferredObj, props.category.id);
+            
         }
     }
 
@@ -87,7 +65,7 @@ function CategoryItemView(props) {
             }
             <div className="category droppable" onDrop={drop} onDragOver={allowDrop}>
                 <div className="category-name">{props.category.name}</div>
-                <SubListView sublist={listItems} onRemoveListItem={onRemoveListItem} categoryId={props.category.id} drag={drag} />
+                <SubListView sublist={props.sublist} onRemoveListItem={onRemoveListItem} categoryId={props.category.id} drag={drag} />
                 <div>
                     <button
                         style={{ alignItems: 'center' }}

@@ -10,14 +10,16 @@
 
 .container {
   position: fixed;
-  top: 30vh;
-  left: 10%;
-  width: 80%;
+  top: 40%;
+  left: 30%;
+  width: 30%;
   z-index: 100;
   overflow: hidden;
   background-color: aliceblue;
   padding: 40px;
   transition: 0.3s;
+  border-radius: 28px;
+  align-items: center;
 }
 
 input[type=text], textarea {
@@ -82,7 +84,9 @@ input[type=text], textarea {
 }
 
 .remove-button.sub-item {
+  height: 40px;
+  width: 40px;
+  padding: 2px;
+  border-radius: 50px;
   float: none;
-  height: auto;
-  width: auto;
 }

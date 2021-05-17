@@ -13,6 +13,9 @@ function CategoryListView(props) {
                 onAddNewSubItem={props.onAddNewSubItem}
                 onRemoveListItem={props.onRemoveListItem}
                 onDropFromCategory={props.onDropFromCategory}
+                Highlight={props.Highlight}
+                onSetHighlight={props.onSetHighlight}
+                onRemoveHighlight={props.onRemoveHighlight}
                 />)
             }
         </div>

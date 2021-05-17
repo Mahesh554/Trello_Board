@@ -99,3 +99,14 @@ input[type=text], textarea {
   border-radius: 50px;
   float: none;
 }
+
+.hide-element {
+  visibility: hidden;
+}
+
+.droppable {
+  border-style: dashed;
+  border-width: normal;
+  border-color: blue;
+  background-color: lightgrey;
+}

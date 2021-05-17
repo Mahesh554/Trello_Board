@@ -12,6 +12,7 @@ function ListContainerView() {
 
     const [categories, addCategory] = useState([]);
     const [showModel, setShowModel] = useState(false);
+    const [Highlight, setHighlight] = useState(false);
 
     const addToLocalStorage = (modifiedList) => {
         localStorage.setItem("categories", JSON.stringify(modifiedList));
@@ -133,6 +134,7 @@ function ListContainerView() {
     }
 
     const onDropFromCategory = (ModifiedObj, categoryToAddId) => {
+        onRemoveHighlight();
         let listCategoryToRemove = categories.filter((category) => {
             return ModifiedObj.categoryId === category.id
         })
@@ -186,6 +188,14 @@ function ListContainerView() {
 
     }
 
+    const onSetHighlight = () => {
+        setHighlight(true);
+    }
+
+    const onRemoveHighlight = () => {
+        setHighlight(false);
+    }
+
     return (
         <div>
             {
@@ -202,6 +212,9 @@ function ListContainerView() {
                         onAddNewSubItem={onAddNewSubItem}
                         onRemoveListItem={onRemoveListItem}
                         onDropFromCategory={onDropFromCategory}
+                        onSetHighlight={onSetHighlight}
+                        onRemoveHighlight={onRemoveHighlight}
+                        Highlight={Highlight}
                     /> : <div style={{ fontSize: "30px", textAlign: "center", padding: "40px" }}>Category list is empty!</div>
                 }
             </div>

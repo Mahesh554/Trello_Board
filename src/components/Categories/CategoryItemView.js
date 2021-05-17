@@ -43,8 +43,7 @@ function CategoryItemView(props) {
         e.preventDefault();
         let transferredObj = JSON.parse(e.dataTransfer.getData("data"));
         if (props.category.id !== transferredObj.categoryId) {       
-            props.onDropFromCategory(transferredObj, props.category.id);
-            
+            props.onDropFromCategory(transferredObj, props.category.id);           
         }
     }
 
@@ -63,9 +62,9 @@ function CategoryItemView(props) {
             {
                 Modal && <SubListItemFormView onClose={onClose} onAddNewSubItem={onAddNewSubItem} />
             }
-            <div className="category droppable" onDrop={drop} onDragOver={allowDrop}>
+            <div className={`category ${props.Highlight ? "droppable" : ''}`} onDrop={drop} onDragOver={allowDrop}>
                 <div className="category-name">{props.category.name}</div>
-                <SubListView sublist={props.sublist} onRemoveListItem={onRemoveListItem} categoryId={props.category.id} drag={drag} />
+                <SubListView sublist={props.sublist} onRemoveListItem={onRemoveListItem} categoryId={props.category.id} drag={drag} onSetHighlight={props.onSetHighlight} onRemoveHighlight={props.onRemoveHighlight} />
                 <div>
                     <button
                         style={{ alignItems: 'center' }}

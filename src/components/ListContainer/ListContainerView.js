@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import AddCategoryForm from '../Categories/AddCategoryForm';
 import CategoryListView from '../Categories/CategoryListView';
 import './ListContainerView.css';
@@ -49,6 +51,23 @@ function ListContainerView() {
     }, [])
 
     const onRemoveCategory = (removedCategory) => {
+        confirmAlert({
+            title: 'Confirmation',
+            message: 'Are you sure you wanted to delete this category.',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => confirmRemoveCategory(removedCategory)
+              },
+              {
+                label: 'No',
+                onClick: () => {return;}
+              }
+            ]
+          });
+    }
+
+    const confirmRemoveCategory = (removedCategory) => {
         let modifiedList = categories.filter((category) => {
             return category.id !== removedCategory.id
         });

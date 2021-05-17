@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import AddCategoryForm from '../Categories/AddCategoryForm';
 import CategoryListView from '../Categories/CategoryListView';
 import './ListContainerView.css';
+import 'react-toastify/dist/ReactToastify.css'
 
+toast.configure();
 function ListContainerView() {
 
     const [categories, addCategory] = useState([]);
@@ -13,13 +16,23 @@ function ListContainerView() {
     }
 
     const onAddNewCategory = (cName) => {
-        let categoryName = {
+        let Newcategory = {
             id: cName,
             name: cName,
             listItems: []
         }
 
-        let modifiedList = [...categories, categoryName]
+        let CategoryCheck = categories.filter((category) => {
+            return Newcategory.id === category.id
+        });
+
+        if (CategoryCheck.length !== 0) {
+            toast.error(`Category name with name "${Newcategory.id}" already exist.`, { position: toast.POSITION.TOP_CENTER });
+            setShowModel(false);
+            return;
+        }
+
+        let modifiedList = [...categories, Newcategory]
 
         addCategory(modifiedList);
         addToLocalStorage(modifiedList);
@@ -53,6 +66,15 @@ function ListContainerView() {
         let index = categories.findIndex(x => x.id === reqCategory[0].id)
 
         let oldListItems = reqCategory[0].listItems;
+
+        let ListCheck = oldListItems.filter((item) => {
+            return sItem.id === item.id
+        });
+
+        if (ListCheck.length !== 0) {
+            toast.error(`List with name "${sItem.id}" already exist in this category.`, { position: toast.POSITION.TOP_CENTER });
+            return;
+        }
 
         let modifiedList = [...oldListItems, sItem];
 
@@ -113,6 +135,15 @@ function ListContainerView() {
         })
 
         let newItemsAddCategory = [ModifiedObj, ...oldListItemsAddCategory]
+
+        let ListCheck = oldListItemsAddCategory.filter((item) => {
+            return ModifiedObj.id === item.id
+        });
+
+        if (ListCheck.length !== 0) {
+            toast.error(`List with name "${ModifiedObj.id}" already exist in this category.`, { position: toast.POSITION.TOP_CENTER });
+            return;
+        }
 
         let RemoveListCategory = {
             id: listCategoryToRemove[0].id,
